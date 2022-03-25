@@ -8,7 +8,7 @@ const {
 const router = require("express").Router();
 
 // CREATE
-router.post("/", adminToken, async (req, res) => {
+router.post("/",  async (req, res) => {
   const newProduct = new Product(req.body);
   try {
     const savedProduct = await newProduct.save();
@@ -19,7 +19,7 @@ router.post("/", adminToken, async (req, res) => {
 });
 
 // UPDATE
-router.put("/:id", adminToken, async (req, res) => {
+router.put("/:id",  async (req, res) => {
   try {
     //  findByIdAndUpdate is a MongoDB method , these methods makes it easy to perform CRUD operation
     const updatedProduct = await Product.findByIdAndUpdate(
@@ -36,7 +36,7 @@ router.put("/:id", adminToken, async (req, res) => {
 });
 
 // DELETE
-router.delete("/:id", adminToken, async (req, res) => {
+router.delete("/:id",  async (req, res) => {
   try {
     await Product.findByIdAndDelete(req.params.id);
     res.send(200).json("Product has been deleted...");
@@ -79,4 +79,10 @@ router.get("/", async (req, res) => {
   }
 });
 
+
 module.exports = router;
+
+
+
+
+ 
