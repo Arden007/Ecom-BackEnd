@@ -46,7 +46,7 @@ router.delete("/:id", authorizationToken, async (req, res) => {
 });
 
 // GET USER CART
-router.get("/find/:userId", async (req, res) => {
+router.get("/find/:userId",async (req, res) => {
   try {
     //   my condition here is my userId as each user only has one Cart , why i used findOne method
     const cart = await Cart.findOne({userId: req.params.userId});
@@ -57,10 +57,11 @@ router.get("/find/:userId", async (req, res) => {
 });
 
 // GET All USER CARTS
-router.get("/", adminToken, async (req, res) => {
+router.get("/", async (req, res) => {
     try {
         const carts = await Cart.find() 
         res.status(200).json(carts);
+        console.log(carts);
     } catch (error) {
         res.status(500).json(error);
     }
