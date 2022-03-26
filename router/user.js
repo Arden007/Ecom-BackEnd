@@ -52,7 +52,7 @@ router.get("/find/:id", async (req, res) => {
 });
 
 // GET All USERs
-router.get("/",  async (req, res) => {
+router.get("/", adminToken, async (req, res) => {
   try {
     const users = await User.find();
     res.status(200).json(users);
@@ -62,11 +62,11 @@ router.get("/",  async (req, res) => {
 });
 
 // GET USER STATS(this will return total number of users register per month etc.)
-router.get("/stats", async (req, res) => {
+router.get("/stats", adminToken, async (req, res) => {
   // lets create a var for current date and last year
   const date = new Date();
   // to get lastYear we first create a date then we SET it to fullYear afterwards we GET fullYear , and finally we add a -1 to get lastYear to the current date
-  const lastYear = new Date(date.setFullYear(date.getFullYear() -1))
+  const lastYear = new Date(date.setFullYear(date.getFullYear() - 1));
   // after setting our var we can write out our function
   try {
     // to group the items I will be using mongoDB method Aggregate
@@ -80,10 +80,10 @@ router.get("/stats", async (req, res) => {
         },
       },
       // now i will be grouping my users by thier Id and link it with month, and also get my total amount of users with the $sum method setting it to 1 it will return/sum all users
-      { 
-        $group:{
-          _id : "$month",
-          total: {$sum: 1},
+      {
+        $group: {
+          _id: "$month",
+          total: { $sum: 1 },
         },
       },
     ]);
@@ -145,14 +145,14 @@ router.get("/cart/:userId",async (req, res) => {
 });
 
 // GET All USER CARTS
-router.get("/cart", async (req, res) => {
-    try {
-        const carts = await Cart.find() 
-        res.status(200).json(carts);
-        console.log(carts);
-    } catch (error) {
-        res.status(500).json(error);
-    }
-})
+router.get("/cart", adminToken, async (req, res) => {
+  try {
+    const carts = await Cart.find();
+    res.status(200).json(carts);
+    console.log(carts);
+  } catch (error) {
+    res.status(500).json(error);
+  }
+});
 
 module.exports = router;

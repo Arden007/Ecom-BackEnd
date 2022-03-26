@@ -8,7 +8,7 @@ const {
 const router = require("express").Router();
 
 // CREATE
-router.post("/",  async (req, res) => {
+router.post("/", adminToken, async (req, res) => {
   const newProduct = new Product(req.body);
   try {
     const savedProduct = await newProduct.save();
@@ -19,7 +19,7 @@ router.post("/",  async (req, res) => {
 });
 
 // UPDATE
-router.put("/:id",  async (req, res) => {
+router.put("/:id", authorizationToken, async (req, res) => {
   try {
     //  findByIdAndUpdate is a MongoDB method , these methods makes it easy to perform CRUD operation
     const updatedProduct = await Product.findByIdAndUpdate(
@@ -36,17 +36,17 @@ router.put("/:id",  async (req, res) => {
 });
 
 // DELETE
-router.delete("/:id",  async (req, res) => {
+router.delete("/:id", authorizationToken, async (req, res) => {
   try {
     await Product.findByIdAndDelete(req.params.id);
-    res.send(200).json("Product has been deleted...");
+    res.send("Product has been deleted...");
   } catch (err) {
-    res.status(500).json(err);
+    res.send(err);
   }
 });
 
 // GET PRODUCT
-router.get("/:id", async (req, res) => {
+router.get("/:id",authorizationToken, async (req, res) => {
   try {
     const product = await Product.findById(req.params.id);
     res.status(200).json(product);
@@ -56,7 +56,7 @@ router.get("/:id", async (req, res) => {
 });
 
 // GET All PRODUCTS
-router.get("/", async (req, res) => {
+router.get("/",adminToken, async (req, res) => {
   const qNew = req.query.new;
   const qCategory = req.query.category;
   try {
