@@ -46,7 +46,7 @@ router.delete("/:id", authorizationToken, async (req, res) => {
 });
 
 // GET PRODUCT
-router.get("/:id",authorizationToken, async (req, res) => {
+router.get("/:id", async (req, res) => {
   try {
     const product = await Product.findById(req.params.id);
     res.status(200).json(product);
@@ -56,7 +56,7 @@ router.get("/:id",authorizationToken, async (req, res) => {
 });
 
 // GET All PRODUCTS
-router.get("/",adminToken, async (req, res) => {
+router.get("/", async (req, res) => {
   const qNew = req.query.new;
   const qCategory = req.query.category;
   try {
