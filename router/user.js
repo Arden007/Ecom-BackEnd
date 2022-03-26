@@ -8,7 +8,7 @@ const {
 const router = require("express").Router();
 
 // UPDATE
-router.put("/:id", authorizationToken, async (req, res) => {
+router.put("/:id", async (req, res) => {
   if (req.body.password) {
     req.body.password = CryptoJS.AES.encrypt(
       req.body.password,
@@ -31,9 +31,9 @@ router.put("/:id", authorizationToken, async (req, res) => {
 });
 
 // DELETE
-router.delete("/:id", authorizationToken, async (req, res) => {
+router.delete("/:id", async (req, res) => {
   try {
-    await User.findByIdAndDelete(req.params.id)
+    await User.findByIdAndDelete(req.params.id);
     res.send(200).json("User has been deleted...");
   } catch (err) {
     res.status(500).json(err);
@@ -45,14 +45,14 @@ router.get("/find/:id", async (req, res) => {
   try {
     const user = await User.findById(req.params.id);
     const { password, ...others } = user._doc;
-    res.status(200).json({ others});
+    res.status(200).json({ others });
   } catch (err) {
     res.status(500).json(err);
   }
 });
 
 // GET All USERs
-router.get("/", adminToken, async (req, res) => {
+router.get("/", async (req, res) => {
   try {
     const users = await User.find();
     res.status(200).json(users);
@@ -62,7 +62,7 @@ router.get("/", adminToken, async (req, res) => {
 });
 
 // GET USER STATS(this will return total number of users register per month etc.)
-router.get("/stats", adminToken, async (req, res) => {
+router.get("/stats", async (req, res) => {
   // lets create a var for current date and last year
   const date = new Date();
   // to get lastYear we first create a date then we SET it to fullYear afterwards we GET fullYear , and finally we add a -1 to get lastYear to the current date
@@ -107,7 +107,7 @@ router.post("/cart", async (req, res) => {
 });
 
 // UPDATE
-router.put("/cart/:id",  async (req, res) => {
+router.put("/cart/:id", async (req, res) => {
   try {
     //  findByIdAndUpdate is a MongoDB method , these methods makes it easy to perform CRUD operation
     const updatedCart = await Cart.findByIdAndUpdate(
@@ -124,7 +124,7 @@ router.put("/cart/:id",  async (req, res) => {
 });
 
 // DELETE
-router.delete("/cart/:id",  async (req, res) => {
+router.delete("/cart/:id", async (req, res) => {
   try {
     await Cart.findByIdAndDelete(req.params.id);
     res.send(200).json("Cart has been deleted...");
@@ -134,10 +134,10 @@ router.delete("/cart/:id",  async (req, res) => {
 });
 
 // GET USER CART
-router.get("/cart/:userId",async (req, res) => {
+router.get("/cart/:userId", async (req, res) => {
   try {
     //   my condition here is my userId as each user only has one Cart , why i used findOne method
-    const cart = await Cart.findOne({userId: req.params.userId});
+    const cart = await Cart.findOne({ userId: req.params.userId });
     res.status(200).json(cart);
   } catch (err) {
     res.status(500).json(err);
@@ -145,7 +145,7 @@ router.get("/cart/:userId",async (req, res) => {
 });
 
 // GET All USER CARTS
-router.get("/cart",  async (req, res) => {
+router.get("/cart", async (req, res) => {
   try {
     const carts = await Cart.find();
     res.status(200).json(carts);
