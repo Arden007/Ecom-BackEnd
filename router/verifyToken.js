@@ -27,7 +27,7 @@ const authorizationToken = (req,res,next) =>{
 
 const adminToken = (req, res, next) => {
   verifyToken(req, res, () => {
-    if (req.user.isAdmin) {
+    if (req.user.isAdmin === true) {
       next();
     } else {
       res.status(403).json("You are not authorized for this action!");
