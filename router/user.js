@@ -96,7 +96,7 @@ router.get("/stats", adminToken, async (req, res) => {
 // Cart
 
 // CREATE
-router.post("/cart", verifyToken, async (req, res) => {
+router.post("/cart", async (req, res) => {
   const newCart = new Cart(req.body);
   try {
     const savedCart = await newCart.save();
@@ -107,7 +107,7 @@ router.post("/cart", verifyToken, async (req, res) => {
 });
 
 // UPDATE
-router.put("/cart/:id", authorizationToken, async (req, res) => {
+router.put("/cart/:id",  async (req, res) => {
   try {
     //  findByIdAndUpdate is a MongoDB method , these methods makes it easy to perform CRUD operation
     const updatedCart = await Cart.findByIdAndUpdate(
@@ -124,7 +124,7 @@ router.put("/cart/:id", authorizationToken, async (req, res) => {
 });
 
 // DELETE
-router.delete("/cart/:id", authorizationToken, async (req, res) => {
+router.delete("/cart/:id",  async (req, res) => {
   try {
     await Cart.findByIdAndDelete(req.params.id);
     res.send(200).json("Cart has been deleted...");
@@ -145,7 +145,7 @@ router.get("/cart/:userId",async (req, res) => {
 });
 
 // GET All USER CARTS
-router.get("/cart", adminToken, async (req, res) => {
+router.get("/cart",  async (req, res) => {
   try {
     const carts = await Cart.find();
     res.status(200).json(carts);
