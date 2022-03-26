@@ -6,7 +6,6 @@ const dotenv = require("dotenv");
 const userRouter = require("./router/user");
 const authRouter = require("./router/auth");
 const productRouter = require("./router/product");
-const cartRouter = require("./router/cart");
 const orderRouter = require("./router/order");
 
 dotenv.config();
@@ -26,8 +25,7 @@ app.use("/user", userRouter);
 app.use("/auth", authRouter);
 // PRODUCT
 app.use("/product", productRouter);
-// Cart
-app.use("/cart", cartRouter);
+
 // Order
 app.use("/order", orderRouter);
 
