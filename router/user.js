@@ -41,7 +41,7 @@ router.delete("/:id", authorizationToken, async (req, res) => {
 });
 
 // GET USER
-router.get("/find/:id", adminToken, async (req, res) => {
+router.get("/find/:id", async (req, res) => {
   try {
     const user = await User.findById(req.params.id);
     const { password, ...others } = user._doc;
@@ -52,7 +52,7 @@ router.get("/find/:id", adminToken, async (req, res) => {
 });
 
 // GET All USERs
-router.get("/", adminToken, async (req, res) => {
+router.get("/",  async (req, res) => {
   try {
     const users = await User.find();
     res.status(200).json(users);
@@ -62,7 +62,7 @@ router.get("/", adminToken, async (req, res) => {
 });
 
 // GET USER STATS(this will return total number of users register per month etc.)
-router.get("/stats", adminToken, async (req, res) => {
+router.get("/stats", async (req, res) => {
   // lets create a var for current date and last year
   const date = new Date();
   // to get lastYear we first create a date then we SET it to fullYear afterwards we GET fullYear , and finally we add a -1 to get lastYear to the current date
