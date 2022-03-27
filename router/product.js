@@ -19,7 +19,7 @@ router.post("/", adminToken, async (req, res) => {
 });
 
 // UPDATE
-router.put("/:id", async (req, res) => {
+router.put("/:id",adminToken, async (req, res) => {
   try {
     //  findByIdAndUpdate is a MongoDB method , these methods makes it easy to perform CRUD operation
     const updatedProduct = await Product.findByIdAndUpdate(
@@ -36,7 +36,7 @@ router.put("/:id", async (req, res) => {
 });
 
 // DELETE
-router.delete("/:id",  async (req, res) => {
+router.delete("/:id", adminToken, async (req, res) => {
   try {
     await Product.findByIdAndDelete(req.params.id);
     res.send("Product has been deleted...");
