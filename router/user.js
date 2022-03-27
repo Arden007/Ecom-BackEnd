@@ -52,7 +52,7 @@ router.get("/find/:id", async (req, res) => {
 });
 
 // GET All USERs
-router.get("/", async (req, res) => {
+router.get("/",authorizationToken, async (req, res) => {
   try {
     const users = await User.find();
     res.status(200).json(users);
